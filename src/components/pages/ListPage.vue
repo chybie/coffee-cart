@@ -30,7 +30,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { mapState, mapMutations, mapGetters } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
+import { useRoute } from 'vue-router'; 
 import { currency, slow } from '../../utils';
 import Cup from '../parts/Cup.vue';
 import Pay from '../parts/Pay.vue';
@@ -50,11 +51,12 @@ export default defineComponent({
     }),
   },
   data() {
+    const route = useRoute()
     return {
-      showAd: this.$route.query.ad,
+      showAd: route.query.ad,
       renderAd: false,
       showPromo: false,
-      breakable: this.$route.query.breakable,
+      breakable: route.query.breakable,
       waitTime: 1000,
       timeoutId: null,
       isBigger: false,
@@ -103,8 +105,8 @@ export default defineComponent({
     addToCart(name: string) {
       slow();
       this.$store.commit('cart/addToCart', name);
-
-      if (this.$route.query.breakable) {
+      const route = useRoute()
+      if (route.query.breakable) {
         console.error('Some additional workflow is broken.');
       }
     },

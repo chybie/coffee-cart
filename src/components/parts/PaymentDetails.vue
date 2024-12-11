@@ -30,6 +30,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'PaymentDetails',
@@ -69,7 +70,8 @@ export default defineComponent({
         this.closeModal();
 
         this.$store.commit('cart/emptyCart');
-        this.$router.push('/');
+        const router = useRouter();
+        router.push('/');
         this.$snackbar.showMessage({ content: 'Thanks for your purchase. Please check your email for payment.', color: 'success' });
       }
     },
